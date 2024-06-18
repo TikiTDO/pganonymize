@@ -142,7 +142,7 @@ class TestFakeProvider(object):
         providers.FakeProvider.alter_value('Foo', name='fake.date_of_birth', locale='de_DE')
         assert mock_faker['de_DE'].date_of_birth.call_count == 1
 
-    def test_alter_value_with_unkown_locale(self):
+    def test_alter_value_with_unknown_locale(self):
         with pytest.raises(InvalidProviderArgument):
             providers.FakeProvider.alter_value('Foo', name='fake.date_of_birth', locale='de_DE')
 
