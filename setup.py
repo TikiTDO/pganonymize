@@ -46,6 +46,7 @@ install_requires = [
     'parmap; python_version>="3.6"',
     'parmap==1.5.2; python_version<"3.6"',
     'pgcopy',
+    'pgcopy>=1.5,<1.6; python_version<"3.6"',
     'psycopg2',
     'psycopg2>=2.8.4,<2.9; python_version<"3.6"',
     'pyyaml',
