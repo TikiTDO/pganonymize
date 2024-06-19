@@ -379,7 +379,7 @@ def nested_set(dic, path, value, delimiter='.'):
     Set dictionary value by path.
 
     :param dict dic: The source dictionary
-    :param str path: The path withing dictionary
+    :param str path: The path within dictionary
     :param value: The value to be set
     :param str delimiter: The path delimiter
     """
