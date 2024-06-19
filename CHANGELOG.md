@@ -2,7 +2,7 @@
 
 ## Development
 
-* [#63 Add --dump-options arguments](https://github.com/rheinwerk-verlag/pganonymize/pull/63) ([fblackburn1](https://github.com/fblackburn1))
+* [#64 Fix typos](https://github.com/rheinwerk-verlag/pganonymize/pull/64) ([kianmeng](https://github.com/kianmeng))
 * [#62 Allow to configure parallel option](https://github.com/rheinwerk-verlag/pganonymize/pull/62) ([fblackburn1](https://github.com/fblackburn1))
 * [#58 Support pg dump password](https://github.com/rheinwerk-verlag/pganonymize/pull/58) ([fblackburn1](https://github.com/fblackburn1))
 * [#53 Python 2.7 tests are failing](https://github.com/rheinwerk-verlag/pganonymize/issues/53)
