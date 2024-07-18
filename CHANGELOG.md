@@ -2,6 +2,8 @@
 
 ## Development
 
+## 0.12.0 (2024-07-18)
+
 * [#64 Fix typos](https://github.com/rheinwerk-verlag/pganonymize/pull/64) ([kianmeng](https://github.com/kianmeng))
 * [#62 Allow to configure parallel option](https://github.com/rheinwerk-verlag/pganonymize/pull/62) ([fblackburn1](https://github.com/fblackburn1))
 * [#58 Support pg dump password](https://github.com/rheinwerk-verlag/pganonymize/pull/58) ([fblackburn1](https://github.com/fblackburn1))
