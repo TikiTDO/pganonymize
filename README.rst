@@ -8,9 +8,10 @@ anonymization. The tool requires a direct PostgreSQL connection to perform the a
 
 .. class:: no-web no-pdf
 
-    |python| |license| |pypi| |downloads| |build| |health|
+    |python| |license| |pypi| |downloads| |build| |codecov| |health|
 
-.. image:: docs/_static/demo.gif
+.. figure:: https://raw.githubusercontent.com/rheinwerk-verlag/pganonymize/main/docs/_static/demo.gif
+    :width: 100%
 
 .. contents::
 
@@ -84,8 +85,11 @@ Usage
     --port PORT           Port of the database
     --dry-run             Don't commit changes made on the database
     --dump-file DUMP_FILE
-                            Create a database dump file with the given name
+                          Create a database dump file with the given name
+    --dump-options DUMP_OPTIONS
+                          Options to pass to the pg_dump command
     --init-sql INIT_SQL   SQL to run before starting anonymization
+    --parallel            Data anonymization is done in parallel
 
 Despite the database connection values, you will have to define a YAML schema file, that includes
 all anonymization rules for that database. Take a look at the `schema documentation`_ or the
@@ -134,6 +138,23 @@ Example call:
         --dump-file=/tmp/dump.gz \
         -v
 
+So that the password for dumping does not have to be entered manually, it can also be entered as an environment var
+``PGPASSWORD``:
+
+.. code-block::
+
+    $ PGPASSWORD=password pganonymize --schema=myschema.yml \
+        --dbname=test_database \
+        --user=username \
+        --password=mysecret \
+        --host=db.host.example.com \
+        --dump-file=/tmp/dump.gz \
+        -v
+
+.. warning::
+
+    Currently only the ``dump-file`` operation supports environment variables.
+
 Docker
 ~~~~~~
 
@@ -161,7 +182,7 @@ After that you can pass a schema file to the container, using Docker volumes, an
 
 .. _uuid4: https://www.postgresql.org/docs/current/datatype-uuid.html
 .. _documentation: https://pganonymize.readthedocs.io/en/latest/
-.. _schema documentation: https://python-postgresql-anonymizer.readthedocs.io/en/latest/schema.html
+.. _schema documentation: https://pganonymize.readthedocs.io/en/latest/schema.html
 .. _YAML sample schema: https://github.com/rheinwerk-verlag/pganonymize/blob/master/sample_schema.yml
 
 .. |python| image:: https://img.shields.io/pypi/pyversions/pganonymize
@@ -177,10 +198,13 @@ After that you can pass a schema file to the container, using Docker volumes, an
     :target: https://pepy.tech/project/pganonymize
     :alt: Download count
 
-.. |build| image:: https://github.com/rheinwerk-verlag/postgresql-anonymizer/workflows/Test/badge.svg
+.. |build| image:: https://github.com/rheinwerk-verlag/pganonymize/actions/workflows/test.yml/badge.svg
     :target: https://github.com/rheinwerk-verlag/pganonymize/actions
 
+.. |codecov| image:: https://codecov.io/gh/rheinwerk-verlag/pganonymize/branch/main/graph/badge.svg
+    :target: https://codecov.io/gh/rheinwerk-verlag/pganonymize
+
 .. |health| image:: https://snyk.io/advisor/python/pganonymize/badge.svg
-  :target: https://snyk.io/advisor/python/pganonymize
-  :alt: pganonymize
+    :target: https://snyk.io/advisor/python/pganonymize
+    :alt: pganonymize
 

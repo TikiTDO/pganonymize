@@ -6,7 +6,7 @@ import argparse
 import logging
 import time
 
-from pganonymize.config import config
+from pganonymize.config import config, validate_args_with_config
 from pganonymize.constants import DATABASE_ARGS, DEFAULT_SCHEMA_FILE
 from pganonymize.providers import provider_registry
 from pganonymize.utils import anonymize_tables, create_database_dump, get_connection, truncate_tables
@@ -46,7 +46,18 @@ def get_arg_parser():
     parser.add_argument('--dry-run', action='store_true', help='Don\'t commit changes made on the database',
                         default=False)
     parser.add_argument('--dump-file', help='Create a database dump file with the given name')
+    parser.add_argument('--dump-options', help='Options to pass to the pg_dump command',
+                        default='--format custom --compress 9')
     parser.add_argument('--init-sql', help='SQL to run before starting anonymization', default=False)
+    parser.add_argument(
+        '--parallel',
+        action='store_true',
+        help=(
+            'Parallelize anonymization of value.'
+            'WARNING: `fake.unique.*` providers are not compatible with this option'
+        ),
+        default=False,
+    )
 
     return parser
 
@@ -65,6 +76,8 @@ def main(args):
 
     config.schema_file = args.schema
 
+    validate_args_with_config(args, config)
+
     pg_args = get_pg_args(args)
     connection = get_connection(pg_args)
     if args.init_sql:
@@ -75,7 +88,12 @@ def main(args):
 
     start_time = time.time()
     truncate_tables(connection)
-    anonymize_tables(connection, verbose=args.verbose, dry_run=args.dry_run)
+    anonymize_tables(
+        connection,
+        verbose=args.verbose,
+        dry_run=args.dry_run,
+        parallel=args.parallel,
+    )
 
     if not args.dry_run:
         connection.commit()
@@ -85,4 +103,4 @@ def main(args):
     logging.info('Anonymization took {:.2f}s'.format(end_time - start_time))
 
     if args.dump_file:
-        create_database_dump(args.dump_file, pg_args)
+        create_database_dump(args.dump_file, pg_args, args.dump_options)
